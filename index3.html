@@ -164,13 +164,13 @@
 
         <div class="tab-content active" id="map">
           <h2>Map of Aggregated Catches</h2>
-          <iframe src="https://pfwra.blob.core.windows.net/public/hexmap_2024.html"></iframe>
+          <iframe src="hexmap_2024.html"></iframe>
         </div>
 
         <div class="tab-content" id="bar">
-          <h2>Species Caught Since 2020</h2>
-          <iframe src="https://pfwra.blob.core.windows.net/public/bar_chart_2024.html"></iframe>
-        </div>
+        <h2>Species Caught Since 2020</h2>
+        <iframe src="bar_chart_2024.html"></iframe>
+      </div>
 
         <div class="tab-content" id="about">
           <h2>About This Dashboard</h2>
@@ -216,7 +216,7 @@
   });
 
   // Animated value counts
-  function animateCount(el, value, duration = 2000) {
+  function animateCount(el, value, duration = 6000) {
     const startTime = performance.now();
     const step = timestamp => {
       const progress = Math.min((timestamp - startTime) / duration, 1);
@@ -226,20 +226,16 @@
     requestAnimationFrame(step);
   }
 
-  // Fetch stats from Azure
-  fetch("https://pfwra.blob.core.windows.net/public/summary_stats.json")
-    .then(response => {
-      if (!response.ok) throw new Error("Failed to load JSON");
-      return response.json();
-    })
-    .then(data => {
-      animateCount(document.getElementById('All_catches'), data.All_catches || 0);
-      animateCount(document.getElementById('All_trap_records'), data.All_trap_records || 0);
-      animateCount(document.getElementById('trapLength'), data.trapLength || 0);
-    })
-    .catch(error => {
-      console.error("Failed to fetch stats:", error);
-    });
+ // Instead of fetching, hard-code:
+  const data = {
+    All_catches: 27566,
+    All_trap_records: 223915,
+    trapLength: 3637
+  };
+
+  animateCount(document.getElementById('All_catches'), data.All_catches);
+  animateCount(document.getElementById('All_trap_records'), data.All_trap_records);
+  animateCount(document.getElementById('trapLength'), data.trapLength);
 </script>
 
 </body>
