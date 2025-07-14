@@ -164,12 +164,12 @@
 
         <div class="tab-content active" id="map">
           <h2>Map of Aggregated Catches</h2>
-          <iframe src="https://pfwra.blob.core.windows.net/public/hexmap_2024.html"></iframe>
+          <iframe src="hexmap_2024.html"></iframe>
         </div>
 
         <div class="tab-content" id="bar">
           <h2>Species Caught Since 2020</h2>
-          <iframe src="https://pfwra.blob.core.windows.net/public/bar_chart_2024.html"></iframe>
+          <iframe src="bar_chart_2024.html"></iframe>
         </div>
 
         <div class="tab-content" id="about">
@@ -227,7 +227,7 @@
   }
 
   // Fetch stats from Azure (this)
-  fetch("https://pfwra.blob.core.windows.net/public/summary_stats.json")
+  fetch("summary_stats.json")
     .then(response => {
       if (!response.ok) throw new Error("Failed to load JSON");
       return response.json();
