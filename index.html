@@ -226,7 +226,7 @@
     requestAnimationFrame(step);
   }
 
-  // Fetch stats from Azure
+  // Fetch stats from Azure (this)
   fetch("https://pfwra.blob.core.windows.net/public/summary_stats.json")
     .then(response => {
       if (!response.ok) throw new Error("Failed to load JSON");
