@@ -10,18 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repo with PAT
         uses: actions/checkout@v3
         with:
-          persist-credentials: true  # needed to push changes
+          token: ${{ secrets.GH_PAT }}  # Set this in repo secrets!
 
-      - name: Set up Git
+      - name: Fetch dashboard files
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p website/
+          curl -sSf https://pfwra.blob.core.windows.net/public/hexmap_2024.html -o website/hexmap_2024.html
+          curl -sSf https://pfwra.blob.core.windows.net/public/bar_chart_2024.html -o website/bar_chart_2024.html
+          curl -sSf https://pfwra.blob.core.windows.net/public/summary_stats.json -o website/summary_stats.json
 
-      - name: Make script executable
-        run: chmod +x ./fetch_resources.sh
+      - name: Commit and push if there are changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Run fetch_resources.sh
-        run: ./fetch_resources.sh
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add website/
+            git commit -m "Update dashboard resources $(date --iso-8601=minutes)"
+            git push
+          else
+            echo "No changes to commit."
+          fi
