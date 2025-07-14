@@ -1,5 +1,8 @@
 name: Fetch Dashboard Resources
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:  # manual trigger
   schedule:
@@ -10,17 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo with PAT
+      - name: Check out repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_PAT }}  # Set this in repo secrets!
+          persist-credentials: true
 
       - name: Fetch dashboard files
         run: |
-          mkdir -p website/
-          curl -sSf https://pfwra.blob.core.windows.net/public/hexmap_2024.html -o website/hexmap_2024.html
-          curl -sSf https://pfwra.blob.core.windows.net/public/bar_chart_2024.html -o website/bar_chart_2024.html
-          curl -sSf https://pfwra.blob.core.windows.net/public/summary_stats.json -o website/summary_stats.json
+          curl -sSf https://pfwra.blob.core.windows.net/public/hexmap_2024.html -o hexmap_2024.html
+          curl -sSf https://pfwra.blob.core.windows.net/public/bar_chart_2024.html -o bar_chart_2024.html
+          curl -sSf https://pfwra.blob.core.windows.net/public/summary_stats.json -o summary_stats.json
 
       - name: Commit and push if there are changes
         run: |
@@ -28,7 +30,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           if [[ -n "$(git status --porcelain)" ]]; then
-            git add website/
+            git add .
             git commit -m "Update dashboard resources $(date --iso-8601=minutes)"
             git push
           else
