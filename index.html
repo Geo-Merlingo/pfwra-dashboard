@@ -121,18 +121,25 @@
       color: white;
       font-weight: bold;
       font-family: 'Lato', sans-serif;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .value-box:hover {
+      transform: scale(1.1);
+      transition: transform 0.5s ease;
+      cursor: default;
     }
 
     .value-box .title {
       grid-area: title;
       font-size: 1.1rem;
-      opacity: 1;
+      opacity: 0.8;
     }
 
     .value-box .number {
       grid-area: number;
       font-size: 2.2rem;
+      opacity: 0.8; 
     }
 
     .value-box .icon {
@@ -142,9 +149,10 @@
       margin-left: 1rem;
     }
 
-    .value-box.purple { background-color: #6f42c1; }
-    .value-box.teal { background-color: #20c997; }
-    .value-box.pink { background-color: #e83e8c; }
+    .value-box.purple { background-color: #7e22ce; } /* vivid purple */
+    .value-box.teal   { background-color: #14b8a6; } /* deep teal */
+    .value-box.pink   { background-color: #db2777; } /* strong pink */
+
   </style>
 </head>
 <body>
@@ -164,12 +172,12 @@
 
         <div class="tab-content active" id="map">
           <h2>Map of Aggregated Catches</h2>
-          <iframe src="https://pfwra.blob.core.windows.net/public/hexmap_2024.html"></iframe>
+          <iframe src="hexmap_2024.html"></iframe>
         </div>
 
         <div class="tab-content" id="bar">
           <h2>Species Caught Since 2020</h2>
-          <iframe src="https://pfwra.blob.core.windows.net/public/bar_chart_2024.html"></iframe>
+          <iframe src="bar_chart_2024.html"></iframe>
         </div>
 
         <div class="tab-content" id="about">
@@ -227,7 +235,7 @@
   }
 
   // Fetch stats from Azure (this)
-  fetch("https://pfwra.blob.core.windows.net/public/summary_stats.json")
+  fetch("summary_stats.json")
     .then(response => {
       if (!response.ok) throw new Error("Failed to load JSON");
       return response.json();
