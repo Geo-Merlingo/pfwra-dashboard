@@ -20,8 +20,8 @@ jobs:
 
       - name: Fetch dashboard files
         run: |
-          curl -sSf https://pfwra.blob.core.windows.net/public/hexmap_2024.html -o hexmap_2024.html
-          curl -sSf https://pfwra.blob.core.windows.net/public/bar_chart_2024.html -o bar_chart_2024.html
+          curl -sSf https://pfwra.blob.core.windows.net/public/hexmap.html -o hexmap.html
+          curl -sSf https://pfwra.blob.core.windows.net/public/bar_chart.html -o bar_chart.html
           curl -sSf https://pfwra.blob.core.windows.net/public/summary_stats.json -o summary_stats.json
 
       - name: Commit and push if there are changes
