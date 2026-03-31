@@ -238,8 +238,8 @@
       return response.json();
     })
     .then(data => {
-      animateCount(document.getElementById('All_catches'), data.All_catches || 0);
-      animateCount(document.getElementById('All_trap_records'), data.All_trap_records || 0);
+      animateCount(document.getElementById('catches'), data.catches || 0);
+      animateCount(document.getElementById('All_records'), data.All_records || 0);
       animateCount(document.getElementById('trapLength'), data.trapLength || 0);
     })
     .catch(error => {
